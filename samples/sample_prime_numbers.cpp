@@ -13,6 +13,8 @@
 #ifndef USE_SET // Использовать класс TBitField
 
 #include "tbitfield.h"
+#include <cstdlib> // Для работы с функцией system()
+using namespace std;
 
 int main()
 {
@@ -49,6 +51,7 @@ int main()
     }
   cout << endl;
   cout << "В первых " << n << " числах " << count << " простых" << endl;
+  system("pause");
 }
 #else
 
@@ -89,6 +92,7 @@ int main()
     }
   cout << endl;
   cout << "В первых " << n << " числах " << count << " простых" << endl;
+  system("pause");
 }
 
 #endif

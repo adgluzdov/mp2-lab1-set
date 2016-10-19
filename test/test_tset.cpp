@@ -295,3 +295,35 @@ TEST(TSet, check_negation_operator)
 
   EXPECT_EQ(expSet, set1);
 }
+
+TEST(TSet, MyTest_5)
+{
+  const int size1 = 20, size2 = 1;
+  TSet set1(size1), set2(size2);
+  set1.InsElem(1);
+  set1.InsElem(2);
+  set1.InsElem(3);
+  set2 = set1;
+
+  EXPECT_EQ(set1, set2);
+}
+
+TEST(TSet,  MyTest_own_test_combine_three_sets_wrong) 
+{ 
+	const int size = 5; 
+	TSet set1(size), set2(size), set3(size), set4(size), setres(size); 
+	//set1 = {1} 
+	set1.InsElem(1); 
+	//set2 = {2} 
+	set2.InsElem(2); 
+	//set3 = {3} 
+	set3.InsElem(3); 
+
+	set4 = (set1 + set2 + set3); 
+	//setres = {1, 2, 4} 
+	setres.InsElem(1); 
+	setres.InsElem(2); 
+	setres.InsElem(4); 
+
+	EXPECT_NE(setres, set4); 
+}
