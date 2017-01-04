@@ -6,6 +6,7 @@
 // Множество - реализация через битовые поля
 
 #include "tset.h"
+#include <stdexcept>
 
 TSet::TSet(int mp) : BitField(mp)
 {
@@ -43,7 +44,7 @@ int TSet::IsMember(const int Elem) const // элемент множества?
 	if(Elem < MaxPower)
 		return BitField.GetBit(Elem);
 	else
-		throw 1;
+		throw std::logic_error("too large element");
 }
 
 void TSet::InsElem(const int Elem) // включение элемента множества
@@ -51,7 +52,7 @@ void TSet::InsElem(const int Elem) // включение элемента мно
 	if(Elem<MaxPower)
 		BitField.SetBit(Elem);
 	else
-		throw 1;
+		throw std::logic_error("too large element");
 }
 
 void TSet::DelElem(const int Elem) // исключение элемента множества
@@ -59,7 +60,7 @@ void TSet::DelElem(const int Elem) // исключение элемента мн
 	if(Elem<MaxPower)
 		BitField.ClrBit(Elem);
 	else
-		throw 1;
+		throw std::logic_error("too large element");
 }
 
 // теоретико-множественные операции
@@ -116,7 +117,7 @@ TSet TSet::operator+(const int Elem) // объединение с элемент
 		return newTSet;
 	}
 	else
-		throw 1;
+		throw std::logic_error("too large element");
 }
 
 TSet TSet::operator-(const int Elem) // разность с элементом
@@ -128,7 +129,7 @@ TSet TSet::operator-(const int Elem) // разность с элементом
 		return newTSet;
 	}
 	else
-		throw 1;
+		throw std::logic_error("too large element");
 }
 
 TSet TSet::operator*(const TSet &s) // пересечение
@@ -166,10 +167,32 @@ TSet TSet::operator~(void) // дополнение
 
 istream &operator>>(istream &istr, TSet &s) // ввод
 {
+	
+	int temp; char ch;
+	do {
+		istr >> ch;
+	} while (ch!='{');
+	do{
+		istr>>temp;
+		s.InsElem(temp);
+		do{
+			istr>>ch;
+		} while ((ch != ',') && (ch != '}'));
+	} while (ch!= '}');
 	return istr;
 }
 
 ostream& operator<<(ostream &ostr, const TSet &s) // вывод
 {
-	return ostr;
+	int i,n; char ch =' ';
+	ostr << "{";
+	n = s.GetMaxPower();
+	for (i=0; i<n; i++)
+		if (s.IsMember(i))
+		{
+			ostr << ch << ' ' << i;
+			ch = ',';
+		}
+		ostr << " }";
+	 return ostr;
 }
